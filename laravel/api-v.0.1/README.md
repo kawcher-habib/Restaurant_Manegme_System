@@ -1,7 +1,7 @@
 # Multi-Branch Project Repository
 
 ## Branches
-- **core-php**: Core PHP implementation of the project.
+- **main**: Core PHP implementation of the project.
 - **laravel-version**: Laravel implementation of the project.
 
 ## Switching Branches

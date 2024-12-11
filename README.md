@@ -26,3 +26,15 @@ This is a Restaurant Management System built using **Core PHP** and **Laravel**,
 ## Goal of the Project
 The goal of this project is to enhance my skills and gain hands-on experience with new technologies. By implementing features using these technologies, development techniques, and software architecture, this practice will help me become more proficient in both back-end development and modern technological practices. I am already familiar with the technologies listed above, and now it’s time to implement them in a real-world project.
 
+# Multi-Branch Project Repository
+
+## Branches
+- **core-php**: Core PHP implementation of the project.
+- **laravel-version**: Laravel implementation of the project.
+
+## Switching Branches
+Use the following commands to switch between branches:
+```bash
+git checkout core-php  # Core PHP project
+git checkout laravel-version  # Laravel project
+

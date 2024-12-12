@@ -1,6 +1,6 @@
 <?php
 
-require_once '../shared/config.php';
+require_once __DIR__.'../../shared/config.php';
 
 class Employee
 {
@@ -17,7 +17,7 @@ class Employee
 
         try {
 
-            $sql = $this->conn->prepare("INSERT INTO employees(emp_id, 'name', email, phone, 'address', 'designation', branch, join_date)VALUES(?,?,?,?,?,?,?,?)");
+            $sql = $this->conn->prepare("INSERT INTO employees(emp_id, name, email, phone, address, designation, branch, salary, join_date)VALUES(?,?,?,?,?,?,?,?,?)");
 
             $sql->execute([
                 $data['emp_id'],
@@ -27,6 +27,7 @@ class Employee
                 $data['address'],
                 $data['designation'],
                 $data['branch'],
+                $data['salary'],
                 $data['join_date'],
             ]);
 

@@ -1,8 +1,8 @@
 <?php
 
-require_once '../models/Users.php';
-require_once '../shared/utilities.php';
-require_once 'Users.php';
+require_once __DIR__ .'../../models/Employee.php';
+require_once __DIR__.'../../shared/utilities.php';
+require_once __DIR__. '../Users.php';
 
 class Employees extends Users
 {
@@ -22,22 +22,23 @@ class Employees extends Users
         $this->salary = $salary;
     }
 
-    public function createNewEmp($input){
-
-        //Validation Check
-
-        $email = $input['email']; $phoneNum = $input['phone'];
-
-         // Employee Id
-         $empId = new Utilities()->makeId('emp');
-
-        $newEmp = new Employee();
-        
-        
+    public static function createNewEmp($input){
+        // echo json_encode($input);
        
 
+        // //Validation Check
 
+         $email = $input['email']; $phoneNum = $input['phone'];
 
+            
+        //  // Employee Id
+          $empId = (new Utilities())->makeId('EMP');
+          $input['emp_id'] = $empId;
+        //   print_r($input);
+
+        $newEmp = (new Employee())->create($input);
+        
+        echo json_encode($newEmp);
         
     }
 

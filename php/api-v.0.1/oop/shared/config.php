@@ -9,7 +9,7 @@ class Config
         $severName = "localhost";
         $userName = "root";
         $password = "";
-        $dbName = "practice_db";
+        $dbName = "rest_mgt";
 
 
         $conn = new mysqli($severName, $userName, $password, $dbName);

@@ -6,6 +6,7 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 require_once 'config.php';
+require_once 'oop/controllers/Employees.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -50,6 +51,14 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 //OOP Route
 
+
+if(isset($_GET['emp'])){
+    $reqMethod = $_SERVER['REQUEST_METHOD'];
+    $input = json_decode(file_get_contents('php://input'),true);
+    if($reqMethod == 'POST'){
+        Employees::createNewEmp($input);
+    }
+}
 
 
 ?>

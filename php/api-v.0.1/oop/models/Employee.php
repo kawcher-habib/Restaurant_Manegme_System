@@ -12,6 +12,8 @@ class Employee
         $this->conn = (new Config())->getConnection();
     }
 
+
+    // New Employee Create
     public function create($data)
     {
 
@@ -24,7 +26,7 @@ class Employee
                 $data['name'],
                 $data['email'],
                 $data['phone'],
-                $data['address'],
+                $data['address'], 
                 $data['designation'],
                 $data['branch'],
                 $data['salary'],
@@ -38,5 +40,9 @@ class Employee
         }
 
     }
+
+
+    // Find a data by id
+
 
 }

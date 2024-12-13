@@ -54,8 +54,11 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 if(isset($_GET['emp'])){
     $reqMethod = $_SERVER['REQUEST_METHOD'];
-    $input = json_decode(file_get_contents('php://input'),true);
+    
     if($reqMethod == 'POST'){
+        
+        $input = json_decode(file_get_contents('php://input'),true);
+
         Employees::createNewEmp($input);
     }
 }

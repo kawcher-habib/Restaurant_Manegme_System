@@ -2,7 +2,7 @@
     $severName = "localhost";
     $userName ="root";
     $password = "";
-    $dbName = "practice_db";
+    $dbName = "rest_mgt_php";
   
 
     $conn = new mysqli($severName, $userName, $password, $dbName);

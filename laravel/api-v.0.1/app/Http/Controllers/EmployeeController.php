@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class EmployeeController extends Controller
 {
     // Get All Data 
 
     public function index()
     {
-        $customers = Customer::all();
+        $employees = Employee::all();
 
-        return response()->json($customers);
+        return response()->json($employees);
     }
 
 
@@ -40,7 +40,7 @@ class CustomerController extends Controller
             ]);
 
             $validationData['emp_id'] = $empId;
-            Customer::create($validationData);
+            Employee::create($validationData);
 
             return response()->json([
                 "status" => "success",
@@ -66,7 +66,7 @@ class CustomerController extends Controller
 
         return response()->json([
             "status" => "success",
-            "data" => Customer::findOrFail($id)
+            "data" => Employee::findOrFail($id)
         ]);
     }
 
@@ -74,6 +74,7 @@ class CustomerController extends Controller
 
     public function update(Request $request)
     {
+       
         try {
             $validation = $request::validate([
                 'id' => 'required',
@@ -87,12 +88,11 @@ class CustomerController extends Controller
                 'join_date' => 'required|date',
 
             ]);
-            
             $id = $request->input("id");
-            $check = Customer::find($id);
+            $check = Employee::find($id);
 
             if ($check) {
-                Customer::update($validation);
+                Employee::update($validation);
                 return response()->json([
                     "status" => "Success",
                     "message" => "Account updated"
@@ -128,10 +128,10 @@ class CustomerController extends Controller
             ]);
 
             $id = $request->input('id');
-            $check = Customer::find($id);
+            $check = Employee::find($id);
 
             if ($check) {
-                Customer::destroy($validation);
+                Employee::destroy($validation);
             }
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -159,5 +159,4 @@ class CustomerController extends Controller
         return $prefix . $timeStamp . $randomNum;
 
     }
-
 }

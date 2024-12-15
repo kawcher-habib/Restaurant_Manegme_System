@@ -55,22 +55,27 @@ $method = $_SERVER['REQUEST_METHOD'];
 if (isset($_GET['emp'])) {
     $reqMethod = $_SERVER['REQUEST_METHOD'];
 
-    if ($reqMethod == 'POST') {
+    if (isset($_GET['id']) && $reqMethod == 'GET') {
+
+        $empId = $_GET['id'];
+        Employees::getEmpById($empId);
+    } else if ($reqMethod == 'GET') {
+        Employees::index();
+    } else if (isset($_GET['edit']) && $reqMethod == "POST") {
+
+        $input = json_decode(file_get_contents('php://input'), true);
+        Employees::updatedEmp($input);
+
+    } else if (isset($_GET['delete']) && $reqMethod == "POST") {
+
+        $input = json_decode(file_get_contents("php://input"), true);
+        Employees::deletEmp($input['emp_id']);
+
+    } else if ($reqMethod == 'POST') {
 
         $input = json_decode(file_get_contents('php://input'), true);
 
         Employees::createNewEmp($input);
-    } else if ($reqMethod == 'GET' && isset($_GET['id'])) {
-
-        $empId = $_GET['id'];
-        Employees::getEmpById($empId);
-    }else if($reqMethod == "PUT"){
-
-        $input = json_decode(file_get_contents('php://input'), true);
-        Employees::updatedEmp($input);
-    }else if($reqMethod == "DELETE"){
-        $input = json_decode(file_get_contents("php://input"), true);
-        Employees::deletEmp($input['emp_id']);
     }
 }
 

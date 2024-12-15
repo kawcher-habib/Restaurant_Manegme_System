@@ -15,7 +15,7 @@ class Employee
     //Get All Data 
     public function getAllData()
     {
-        $sql = "SELECT * FROM employees WHERE";
+        $sql = "SELECT * FROM employees";
         $stmt = $this->conn->prepare($sql);
 
         if ($stmt) {
@@ -73,7 +73,7 @@ class Employee
             $res = $result->fetch_all(MYSQLI_ASSOC);
 
             if ($res) {
-                return $res;
+                return ["status" => "success", "message" => $res];
             } else {
                 return ["status" => "error", "message" => "Data not found"];
             }
@@ -85,20 +85,27 @@ class Employee
     // Update Employee
 
     public function update($data)
-    {
-        $sql = "UPDATE employees SET('name':?, 'email':?, 'phone':?, 'address':?, 'designation':?, 'branch':?, 'salary':?, 'join_date':?) WHERE emp_id = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("sssssssss", $data['name'], $data['email'], $data['phone'], $data['address'], $data['designation'], $data['branch'], $data['salary'], $data['join_date'], $data['emp_id']);
-        if ($stmt) {
+    { // here have probleme( duplicate value) 
 
-            $result = $stmt->execute();
-            if ($result) {
-                return ['status' => 'success', 'message' => $data['emp_id'] . 'Updated successfully'];
+        try {
+            $sql = "UPDATE employees SET name =?, email =?, phone =?, address =?, designation =?, branch =?, salary =?, join_date =? WHERE emp_id = ?";
+            $stmt = $this->conn->prepare($sql);
+
+            $stmt->bind_param("sssssssss", $data['name'], $data['email'], $data['phone'], $data['address'], $data['designation'], $data['branch'], $data['salary'], $data['join_date'], $data['emp_id']);
+
+            if ($stmt) {
+
+                $result = $stmt->execute();
+                if ($result) {
+                    return ['status' => 'success', 'message' => $data['emp_id'] . 'Updated successfully'];
+                } else {
+                    return ["status" => "error", "message" => "Execute failed"];
+                }
             } else {
-                return ["status" => "error", "message" => "Execute failed"];
+                return ["status" => "error", "message" => "Query prepare failed" . $this->conn->error];
             }
-        } else {
-            return ["status" => "error", "message" => "Query prepare failed"];
+        } catch (\Exception $e) {
+            return ["status" => "error", "message" => $e->getMessage()];
         }
 
     }
@@ -106,21 +113,24 @@ class Employee
     // Delete
     public function delete($id)
     {
+        try {
 
-        $sql = "DELETE employees WHERE emp_id=?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("s", $id);
-        if ($stmt) {
+            $sql = "DELETE FROM employees WHERE emp_id=?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("s", $id);
+            if ($stmt) {
 
-            $result = $stmt->execute();
-            if ($result) {
-                return ['status' => 'success', 'message' => $id . 'Deleted'];
+                $result = $stmt->execute();
+                if ($result) {
+                    return ['status' => 'success', 'message' => $id . ' Deleted'];
+                } else {
+                    return ["status" => "error", "message" => "Execute failed"];
+                }
             } else {
-                return ["status" => "error", "message" => "Execute failed"];
+                return ["status" => "error", "message" => "Query prepare failed"];
             }
-        } else {
-            return ["status" => "error", "message" => "Query prepare failed"];
+        } catch (Exception $e) {
+            return ["status" => "error", "message" => $e->getMessage()];
         }
-
     }
 }

@@ -24,6 +24,14 @@ class Employees extends Users
         $this->salary = $salary;
     }
 
+    // Get Employee By Id
+    public static function getEmpById($id){
+        $employees = (new Employee())->getDataById($id);
+        echo json_encode($employees);
+
+    }
+
+    //Create New Employee
     public static function createNewEmp($input)
     {
         // echo json_encode($input);
@@ -57,6 +65,45 @@ class Employees extends Users
         $newEmp = (new Employee())->create($input);
 
         echo json_encode($newEmp);
+
+    }
+
+    // Update Employee
+
+    public static function updatedEmp($input){
+
+        $employee = new Employee();
+        $check = $employee->getDataById($input['emp_id']);
+
+        if($check['status'] != 'error'){
+
+                $res = $employee->update($input);
+                echo json_encode($res);
+
+        }else{
+            echo json_encode([
+                "status"=> "error",
+                "message"=> "Emp not found"
+            ]);
+        }
+    }
+
+    // Delete 
+    public static function deletEmp($id){
+
+        $employee = new Employee();
+        $check = $employee->getDataById($id);
+
+        if($check['status'] != 'error'){
+            $res = $employee->delete($id);
+            echo json_encode($res);
+
+        }else{
+            echo json_encode([
+                "status"=> "error",
+                "message"=> "Emp not found"
+            ]);
+        }
 
     }
 
